@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <RootNamespace>SaaS_BLL</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SaaS-DAL\SaaS-DAL.csproj" />
+      <ProjectReference Include="..\SaaS-Domain\SaaS-Domain.csproj" />
+    </ItemGroup>
+
+</Project>
