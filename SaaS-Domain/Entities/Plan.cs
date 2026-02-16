@@ -3,7 +3,6 @@ using SaaS_Domain.Enums;
 
 namespace SaaS_Domain.Entities;
 
-[Table("plans")]
 public class Plan : BaseEntity
 {
     public Plan()
@@ -24,21 +23,14 @@ public class Plan : BaseEntity
         this.TrialDays = trialDays;
     }
     
-    [Column("plan_type")] public PlanType PlanType { get; set; }
-
-    [Column("name")] public string Name { get; set; } = null!;
-    
-    [Column("description")] public string? Description { get; set; }
-    
-    [Column("base_price")] public decimal BasePrice { get; set; }
-    
-    [Column("currency")] public Currency Currency { get; set; }
-    
-    [Column("billing_interval")] public BillingInterval BillingInterval { get; set; }
-    
-    [Column("trial_days")] public int TrialDays { get; set; }
+    public PlanType PlanType { get; set; } 
+    public string Name { get; set; } = null!;
+    public string? Description { get; set; }
+    public decimal BasePrice { get; set; }
+    public Currency Currency { get; set; }
+    public BillingInterval BillingInterval { get; set; }
+    public int TrialDays { get; set; }
     
     public virtual ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
-    
     public virtual ICollection<PlanAddon>  PlanAddons { get; set; } = new List<PlanAddon>();
 }

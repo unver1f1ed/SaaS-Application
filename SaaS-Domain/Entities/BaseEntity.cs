@@ -8,12 +8,9 @@ public abstract class BaseEntity
     {
         this.Id = id;
     }
-
     protected BaseEntity()
     {
         this.Id = 0;
     }
-    
-    [Column("id")]
     public int Id { get; set; }
 }

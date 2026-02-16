@@ -4,7 +4,7 @@ using SaaS_DAL.Data.InitDataFactory;
 
 namespace SaaS_DAL.Data;
 
-public class SaaSBdContextFactory : IDesignTimeDbContextFactory<SaaSDbContext>
+public class SaaSDbContextFactory : IDesignTimeDbContextFactory<SaaSDbContext>
 {
     public SaaSDbContext CreateDbContext(string[] args)
     {

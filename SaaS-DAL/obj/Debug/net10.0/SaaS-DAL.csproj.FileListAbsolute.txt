@@ -15,3 +15,4 @@ C:\Users\Admin\RiderProjects\SaaS-Application\SaaS-DAL\obj\Debug\net10.0\refint\
 C:\Users\Admin\RiderProjects\SaaS-Application\SaaS-DAL\obj\Debug\net10.0\SaaS-DAL.pdb
 C:\Users\Admin\RiderProjects\SaaS-Application\SaaS-DAL\obj\Debug\net10.0\SaaS-DAL.genruntimeconfig.cache
 C:\Users\Admin\RiderProjects\SaaS-Application\SaaS-DAL\obj\Debug\net10.0\ref\SaaS-DAL.dll
+C:\Users\Admin\RiderProjects\SaaS-Application\SaaS-DAL\obj\Debug\net10.0\SaaS-DAL.sourcelink.json

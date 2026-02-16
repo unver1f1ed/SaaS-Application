@@ -2,7 +2,6 @@
 
 namespace SaaS_Domain.Entities;
 
-[Table("user_roles")]
 public class UserRole : BaseEntity
 {
     public UserRole()
@@ -16,9 +15,8 @@ public class UserRole : BaseEntity
         this.Description = description;
     }
 
-    [Column("role_name")] public string RoleName { get; set; } = null!;
-    
-    [Column("description")] public string? Description { get; set; }
+    public string RoleName { get; set; } = null!;
+    public string? Description { get; set; }
     
     public virtual ICollection<User> Users { get; set; } = new List<User>();
 }
