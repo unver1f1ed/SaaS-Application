@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SaaS-BLL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bc04b04856cbcdb5313fde397e7d6eb87ea2df10")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2d6c5e03e23eeff9e33e1b1bbe044d241ec56501")]
 [assembly: System.Reflection.AssemblyProductAttribute("SaaS-BLL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SaaS-BLL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
