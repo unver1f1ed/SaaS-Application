@@ -25,9 +25,4 @@
       <ProjectReference Include="..\SaaS-Domain\SaaS-Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Interfaces\" />
-      <Folder Include="Repository\" />
-    </ItemGroup>
-
 </Project>

@@ -11,7 +11,7 @@ using SaaS_DAL.Data;
 namespace SaaS_DAL.Migrations
 {
     [DbContext(typeof(SaaSDbContext))]
-    [Migration("20260213224721_Initial")]
+    [Migration("20260216165540_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -24,162 +24,135 @@ namespace SaaS_DAL.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
+                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("amount");
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<int>("Currency")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("currency");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("payment_date");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("PaymentMethod")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("payment_method");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Status")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("status");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("SubscriptionId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("subscription_id");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("payments");
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("SaaS_Domain.Entities.Plan", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
+                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("BasePrice")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("base_price");
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<int>("BillingInterval")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("billing_interval");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Currency")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("currency");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("description");
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("name");
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("PlanType")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("plan_type");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("TrialDays")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("trial_days");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.ToTable("plans");
+                    b.ToTable("Plans");
                 });
 
             modelBuilder.Entity("SaaS_Domain.Entities.PlanAddon", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("AddonName")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("addon_name");
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("BillingType")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("billing_type");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Currency")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("currency");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("description");
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("PlanId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("plan_id");
+                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("unit_price");
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PlanId");
 
-                    b.ToTable("plan_addons");
+                    b.ToTable("PlanAddons");
                 });
 
             modelBuilder.Entity("SaaS_Domain.Entities.Subscription", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("AutoRenew")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("auto_renew");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("CancellationDate")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("cancellation_date");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("CancellationReason")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("cancellation_reason");
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("EndDate")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("end_date");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("PlanId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("plan_id");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("start_date");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("State")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("state");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("TrialEndDate")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("trial_end_date");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("user_id");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -187,31 +160,28 @@ namespace SaaS_DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("subscriptions");
+                    b.ToTable("Subscriptions");
                 });
 
             modelBuilder.Entity("SaaS_Domain.Entities.SubscriptionAddon", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("AddedDate")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("added_date");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("PlanAddonId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("plan_addon_id");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Quantity")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
-                        .HasColumnName("quantity");
+                        .HasDefaultValue(1);
 
                     b.Property<int>("SubscriptionId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("subscription_id");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -219,66 +189,69 @@ namespace SaaS_DAL.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("subscription_addons");
+                    b.ToTable("SubscriptionAddons");
                 });
 
             modelBuilder.Entity("SaaS_Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("email");
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("first_name");
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("last_name");
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("password_hash");
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("UserRoleId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("user_role_id");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.HasIndex("UserRoleId");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("SaaS_Domain.Entities.UserRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("description");
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("RoleName")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("role_name");
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("user_roles");
+                    b.HasIndex("RoleName")
+                        .IsUnique();
+
+                    b.ToTable("UserRoles");
 
                     b.HasData(
                         new
@@ -322,7 +295,7 @@ namespace SaaS_DAL.Migrations
                     b.HasOne("SaaS_Domain.Entities.Plan", "Plan")
                         .WithMany("Subscriptions")
                         .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SaaS_Domain.Entities.User", "User")
@@ -341,7 +314,7 @@ namespace SaaS_DAL.Migrations
                     b.HasOne("SaaS_Domain.Entities.PlanAddon", "PlanAddon")
                         .WithMany("SubscriptionAddons")
                         .HasForeignKey("PlanAddonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SaaS_Domain.Entities.Subscription", "Subscription")
@@ -360,7 +333,7 @@ namespace SaaS_DAL.Migrations
                     b.HasOne("SaaS_Domain.Entities.UserRole", "UserRole")
                         .WithMany("Users")
                         .HasForeignKey("UserRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("UserRole");

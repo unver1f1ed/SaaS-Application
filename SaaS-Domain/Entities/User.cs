@@ -2,7 +2,6 @@
 
 namespace SaaS_Domain.Entities;
 
-[Table("users")]
 public class User : BaseEntity
 {
     public User()
@@ -21,17 +20,12 @@ public class User : BaseEntity
         this.UserRoleId = roleId;
     }
     
-    [Column("first_name")] public string FirstName { get; set; } = null!;
-    
-    [Column("last_name")] public string LastName { get; set; } = null!;
-
-    [Column("email")] public string Email { get; set; } = null!;
-
-    [Column("password_hash")] public string PasswordHash { get; set; } = null!;
-    
-    [Column("user_role_id")] public int UserRoleId { get; set; }
+    public string FirstName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public string PasswordHash { get; set; } = null!;
+    public int UserRoleId { get; set; }
 
     public UserRole UserRole { get; set; } = null!;
-    
     public virtual ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
 }
