@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SaaS-Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2d6c5e03e23eeff9e33e1b1bbe044d241ec56501")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f6c2c96ce64601a87c9c585511ae61d3a9d548d7")]
 [assembly: System.Reflection.AssemblyProductAttribute("SaaS-Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SaaS-Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
