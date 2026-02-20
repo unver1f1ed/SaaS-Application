@@ -45,11 +45,11 @@ public partial class App : Application
         // Register Unit of Work
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         
-        // Register BLL Services (later)
-        // services.AddScoped<IUserService, UserService>();
-        // services.AddScoped<ISubscriptionService, SubscriptionService>();
+        // Register BLL Services TODO
+        // services.AddScoped<IUserService, UserService>(); TODO
+        // services.AddScoped<ISubscriptionService, SubscriptionService>(); TODO
         
-        // Register Views
+        // Register Views TODO
         services.AddTransient<MainWindow>();
     }
 }

@@ -4,6 +4,10 @@ using SaaS_DAL.Interfaces;
 
 namespace SaaS_DAL.Repository;
 
+/// <summary>
+/// Implements the Unit of Work pattern for managing repositories,
+/// transactions, and committing changes to the database as a single unit.
+/// </summary>
 public class UnitOfWork : IUnitOfWork
 {
     private readonly SaaSDbContext _context;

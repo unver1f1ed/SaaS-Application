@@ -4,6 +4,10 @@ using SaaS_DAL.Data.InitDataFactory;
 
 namespace SaaS_DAL.Data;
 
+/// <summary>
+/// Design-time factory for creating <see cref="SaaSDbContext"/> instances.
+/// Used by tools like EF Core migrations.
+/// </summary>
 public class SaaSDbContextFactory : IDesignTimeDbContextFactory<SaaSDbContext>
 {
     public SaaSDbContext CreateDbContext(string[] args)

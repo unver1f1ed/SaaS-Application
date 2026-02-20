@@ -2,6 +2,10 @@
 
 namespace SaaS_DAL.Data.InitDataFactory;
 
+/// <summary>
+/// Abstract factory for providing initial seed data for the SaaS database.
+/// Derived classes supply arrays of entities for each table.
+/// </summary>
 public abstract class AbstractDataFactory
 {
     public abstract Payment[] GetPaymentData();

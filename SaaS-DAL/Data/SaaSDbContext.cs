@@ -4,6 +4,10 @@ using SaaS_Domain.Entities;
 
 namespace SaaS_DAL.Data;
 
+/// <summary>
+/// Entity Framework Core database context for the SaaS application.
+/// Configures entities, applies Fluent API mappings, and optionally seeds initial data.
+/// </summary>
 public class SaaSDbContext : DbContext
 {
     private readonly AbstractDataFactory? _factory;

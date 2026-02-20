@@ -5,6 +5,13 @@ using SaaS_Domain.Entities;
 
 namespace SaaS_DAL.Repository;
 
+/// <summary>
+/// Base repository implementation using Entity Framework Core.
+/// Provides common CRUD operations for entities.
+/// </summary>
+/// <typeparam name="TEntity">
+/// The entity type managed by the repository. Must inherit from <see cref="BaseEntity"/>.
+/// </typeparam>
 public abstract class AbstractRepository<TEntity> : IRepository<TEntity> 
     where TEntity : BaseEntity
 {
@@ -19,7 +26,9 @@ public abstract class AbstractRepository<TEntity> : IRepository<TEntity>
 
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return await DbSet.ToListAsync(cancellationToken);
+        return await DbSet
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
     }
 
     public virtual async Task<TEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
@@ -49,6 +58,8 @@ public abstract class AbstractRepository<TEntity> : IRepository<TEntity>
 
     public virtual async Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await DbSet.AnyAsync(e => e.Id == id, cancellationToken);
+        return await DbSet
+            .AsNoTracking()
+            .AnyAsync(e => e.Id == id, cancellationToken);
     }
 }

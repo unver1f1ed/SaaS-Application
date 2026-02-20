@@ -4,18 +4,23 @@ using SaaS_Domain.Entities;
 
 namespace SaaS_DAL.Configurations;
 
+/// <summary>
+/// Base configuration class for entities using Fluent API.
+/// Sets the primary key and allows derived classes to configure
+/// additional entity-specific mappings.
+/// </summary>
+/// <typeparam name="TEntity">
+/// The entity type being configured. Must inherit from <see cref="BaseEntity"/>.
+/// </typeparam>
 public abstract class BaseEntityConfiguration<TEntity> : IEntityTypeConfiguration<TEntity>
     where TEntity : BaseEntity
 {
     public virtual void Configure(EntityTypeBuilder<TEntity> builder)
     {
-        // Configure primary key (common to all entities)
         builder.HasKey(e => e.Id);
         
-        // Call derived class configuration
         ConfigureEntity(builder);
     }
     
-    // Override this in derived classes for specific configuration
     protected abstract void ConfigureEntity(EntityTypeBuilder<TEntity> builder);
 }
