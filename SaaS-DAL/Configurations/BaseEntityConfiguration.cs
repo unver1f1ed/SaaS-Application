@@ -18,9 +18,9 @@ public abstract class BaseEntityConfiguration<TEntity> : IEntityTypeConfiguratio
     public virtual void Configure(EntityTypeBuilder<TEntity> builder)
     {
         builder.HasKey(e => e.Id);
-        
-        ConfigureEntity(builder);
+
+        this.ConfigureEntity(builder);
     }
-    
+
     protected abstract void ConfigureEntity(EntityTypeBuilder<TEntity> builder);
 }

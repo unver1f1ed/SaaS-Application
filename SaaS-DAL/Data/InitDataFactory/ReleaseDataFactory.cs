@@ -18,7 +18,7 @@ public class ReleaseDataFactory : AbstractDataFactory
     {
         return Array.Empty<PlanAddon>();
     }
-    
+
     public override Subscription[] GetSubscriptionData()
     {
         return Array.Empty<Subscription>();
@@ -39,7 +39,7 @@ public class ReleaseDataFactory : AbstractDataFactory
         return new[]
         {
             new UserRole(1, "Admin", "role for managing things..."),
-            new UserRole(2, "User", "Just a usual subscriber")
+            new UserRole(2, "User", "Just a usual subscriber"),
         };
     }
 }

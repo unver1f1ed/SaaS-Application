@@ -1,23 +1,15 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using SaaS_PR.Core;
 
 namespace SaaS_PR;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow
 {
-    public MainWindow()
+    public ViewLocator ViewLocator { get; }
+
+    public MainWindow(RootNavigationService rootNav, ViewLocator viewLocator)
     {
-        InitializeComponent();
+        this.InitializeComponent();
+        this.DataContext = rootNav;
+        this.ViewLocator = viewLocator;
     }
 }

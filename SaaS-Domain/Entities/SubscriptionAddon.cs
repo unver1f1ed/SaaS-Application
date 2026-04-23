@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SaaS_Domain.Entities;
+﻿namespace SaaS_Domain.Entities;
 
 public class SubscriptionAddon : BaseEntity
 {
@@ -9,21 +7,25 @@ public class SubscriptionAddon : BaseEntity
     {
     }
 
-    public SubscriptionAddon(int id, int subscriptionId, int planAddonId, 
+    public SubscriptionAddon(int id, int subscriptionId, int planAddonId,
         int quantity, DateTime addedDate)
         : base(id)
     {
         this.SubscriptionId = subscriptionId;
-        this.PlanAddonId =  planAddonId;
+        this.PlanAddonId = planAddonId;
         this.Quantity = quantity;
         this.AddedDate = addedDate;
     }
-    
-    public int SubscriptionId { get; set; }
-    public int PlanAddonId { get; set; }
-    public int Quantity { get; set; }
-    public DateTime AddedDate { get; set; }
 
-    public Subscription Subscription { get; set; } = null!;
-    public PlanAddon PlanAddon { get; set; } = null!;
+    public int SubscriptionId { get; init; }
+
+    public int PlanAddonId { get; init; }
+
+    public int Quantity { get; init; }
+
+    public DateTime AddedDate { get; init; }
+
+    public Subscription Subscription { get; init; } = null!;
+
+    public PlanAddon PlanAddon { get; init; } = null!;
 }

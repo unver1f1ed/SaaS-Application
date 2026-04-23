@@ -1,0 +1,233 @@
+﻿<UserControl x:Class="SaaS_PR.Views.User.UserDashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:user="clr-namespace:SaaS_PR.ViewModels.User"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=user:UserDashboardViewModel}"
+             Background="{StaticResource AppBackground}">
+
+    <Grid Margin="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Margin="0 0 0 32">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Дашборд"
+                           Style="{StaticResource PageTitle}"
+                           Margin="0" />
+                <TextBlock Text="Оглядайте ваші підписки"
+                           Foreground="{StaticResource TextSecondary}"
+                           FontSize="13" />
+            </StackPanel>
+            <Button Grid.Column="1"
+                    Style="{StaticResource SecondaryButton}"
+                    Command="{Binding LoadCommand}"
+                    VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Refresh" Width="16" Height="16"
+                                             VerticalAlignment="Center" />
+                    <TextBlock Text="Оновити" Margin="8 0 0 0" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <!-- Status banner -->
+        <materialDesign:Card Grid.Row="1"
+                              Margin="0 0 0 24"
+                              UniformCornerRadius="8"
+                              materialDesign:ElevationAssist.Elevation="Dp0">
+            <materialDesign:Card.Style>
+                <Style TargetType="materialDesign:Card">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasActiveSubscription}" Value="True">
+                            <Setter Property="Background" Value="#1A66BB6A" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding HasActiveSubscription}" Value="False">
+                            <Setter Property="Background" Value="#1AEF5350" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </materialDesign:Card.Style>
+            <StackPanel Orientation="Horizontal" Margin="20 16">
+                <materialDesign:PackIcon Width="22" Height="22"
+                                         VerticalAlignment="Center">
+                    <materialDesign:PackIcon.Style>
+                        <Style TargetType="materialDesign:PackIcon">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding HasActiveSubscription}" Value="True">
+                                    <Setter Property="Kind" Value="CheckCircleOutline" />
+                                    <Setter Property="Foreground" Value="{StaticResource SuccessColor}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding HasActiveSubscription}" Value="False">
+                                    <Setter Property="Kind" Value="AlertCircleOutline" />
+                                    <Setter Property="Foreground" Value="{StaticResource ErrorColor}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </materialDesign:PackIcon.Style>
+                </materialDesign:PackIcon>
+                <TextBlock VerticalAlignment="Center" Margin="12 0 0 0" FontSize="14">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding HasActiveSubscription}" Value="True">
+                                    <Setter Property="Text" Value="У вас немає активних підписок" />
+                                    <Setter Property="Foreground" Value="{StaticResource SuccessColor}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding HasActiveSubscription}" Value="False">
+                                    <Setter Property="Text" Value="У вас немає активних підписок — огляньте плани щоби розпочати" />
+                                    <Setter Property="Foreground" Value="{StaticResource ErrorColor}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+        </materialDesign:Card>
+
+        <!-- Subscriptions list -->
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Text="ВАШІ ПІДПИСКИ"
+                       Style="{StaticResource SectionLabel}"
+                       Margin="0 0 0 12" />
+
+            <!-- Empty state -->
+            <StackPanel Grid.Row="1"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Visibility="{Binding HasActiveSubscription,
+                                     Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                <materialDesign:PackIcon Kind="ClipboardOutline"
+                                         Width="48" Height="48"
+                                         Foreground="{StaticResource TextSecondary}"
+                                         HorizontalAlignment="Center"
+                                         Margin="0 0 0 12" />
+                <TextBlock Text="Доступні підписки згодом..."
+                           FontSize="15"
+                           Foreground="{StaticResource TextSecondary}"
+                           HorizontalAlignment="Center" />
+            </StackPanel>
+
+            <!-- Subscription cards -->
+            <ItemsControl Grid.Row="1"
+                          ItemsSource="{Binding Subscriptions}"
+                          Visibility="{Binding HasActiveSubscription,
+                                       Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card Style="{StaticResource Card}" Margin="0 0 0 12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{Binding PlanName}"
+                                               FontSize="16"
+                                               FontWeight="Medium"
+                                               Foreground="{StaticResource TextPrimary}"
+                                               Margin="0 0 0 4" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Розпочато "
+                                                   FontSize="12"
+                                                   Foreground="{StaticResource TextSecondary}" />
+                                        <TextBlock Text="{Binding StartDate, StringFormat=dd/MM/yyyy}"
+                                                   FontSize="12"
+                                                   Foreground="{StaticResource TextSecondary}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0 4 0 0"
+                                                Visibility="{Binding TrialEndDate, Converter={StaticResource NullToVisibilityConverter}}">
+                                        <TextBlock Text="Пробний період завершується "
+                                                   FontSize="12"
+                                                   Foreground="{StaticResource TextSecondary}" />
+                                        <TextBlock Text="{Binding TrialEndDate, StringFormat=dd/MM/yyyy}"
+                                                   FontSize="12"
+                                                   Foreground="{StaticResource AccentColor}" />
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- State badge -->
+                                <Border Grid.Column="1"
+                                        CornerRadius="4"
+                                        Padding="10 4"
+                                        VerticalAlignment="Center">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding State}" Value="Active">
+                                                    <Setter Property="Background" Value="#1A66BB6A" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding State}" Value="Trial">
+                                                    <Setter Property="Background" Value="#1A4DD0E1" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding State}" Value="Cancelled">
+                                                    <Setter Property="Background" Value="#1AEF5350" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding State}" Value="Expired">
+                                                    <Setter Property="Background" Value="#1A9E9E9E" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <TextBlock Text="{Binding State}"
+                                               FontSize="11"
+                                               FontWeight="Medium">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding State}" Value="Active">
+                                                        <Setter Property="Foreground" Value="{StaticResource SuccessColor}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding State}" Value="Trial">
+                                                        <Setter Property="Foreground" Value="{StaticResource AccentColor}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding State}" Value="Cancelled">
+                                                        <Setter Property="Foreground" Value="{StaticResource ErrorColor}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding State}" Value="Expired">
+                                                        <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Border>
+
+                            </Grid>
+                        </materialDesign:Card>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </Grid>
+
+        <!-- Loading indicator -->
+        <ProgressBar Grid.Row="2"
+                     Style="{StaticResource MaterialDesignCircularProgressBar}"
+                     Value="0"
+                     IsIndeterminate="True"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"
+                     Width="32" Height="32" />
+
+    </Grid>
+</UserControl>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SaaS_DAL.Data;
-using SaaS_DAL.Interfaces;
 using SaaS_Domain.Entities;
+using SaaS_Domain.Interfaces;
 
 namespace SaaS_DAL.Repository;
 
@@ -12,7 +12,7 @@ namespace SaaS_DAL.Repository;
 /// <typeparam name="TEntity">
 /// The entity type managed by the repository. Must inherit from <see cref="BaseEntity"/>.
 /// </typeparam>
-public abstract class AbstractRepository<TEntity> : IRepository<TEntity> 
+public abstract class AbstractRepository<TEntity> : IRepository<TEntity>
     where TEntity : BaseEntity
 {
     protected readonly SaaSDbContext Context;
@@ -26,39 +26,39 @@ public abstract class AbstractRepository<TEntity> : IRepository<TEntity>
 
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return await DbSet
+        return await this.DbSet
             .AsNoTracking()
             .ToListAsync(cancellationToken);
     }
 
     public virtual async Task<TEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await DbSet.FindAsync([id], cancellationToken);
+        return await this.DbSet.FindAsync([id], cancellationToken);
     }
 
     public virtual IQueryable<TEntity> Query()
     {
-        return DbSet.AsQueryable();
+        return this.DbSet.AsQueryable();
     }
 
     public virtual async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        await DbSet.AddAsync(entity, cancellationToken);
+        await this.DbSet.AddAsync(entity, cancellationToken);
     }
 
     public virtual void Update(TEntity entity)
     {
-        DbSet.Update(entity);
+        this.DbSet.Update(entity);
     }
 
     public virtual void Delete(TEntity entity)
     {
-        DbSet.Remove(entity);
+        this.DbSet.Remove(entity);
     }
 
     public virtual async Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await DbSet
+        return await this.DbSet
             .AsNoTracking()
             .AnyAsync(e => e.Id == id, cancellationToken);
     }

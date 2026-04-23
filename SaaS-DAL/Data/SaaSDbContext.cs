@@ -17,34 +17,38 @@ public class SaaSDbContext : DbContext
     {
         this._factory = factory;
     }
-    
+
     public SaaSDbContext(DbContextOptions<SaaSDbContext> options)
         : base(options)
     {
         this._factory = null;
     }
-    
+
     public DbSet<Payment> Payments { get; set; }
-    
+
     public DbSet<Plan> Plans { get; set; }
-    
+
     public DbSet<PlanAddon> PlanAddons { get; set; }
-    
+
     public DbSet<Subscription> Subscriptions { get; set; }
-    
+
     public DbSet<SubscriptionAddon> SubscriptionAddons { get; set; }
-    
+
     public DbSet<User> Users { get; set; }
-    
+
     public DbSet<UserRole> UserRoles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ArgumentNullException.ThrowIfNull(modelBuilder);
-        
+
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(SaaSDbContext).Assembly);
 
-        if (_factory == null) return;
+        if (this._factory == null)
+        {
+            return;
+        }
+
         modelBuilder.Entity<Payment>().HasData(this._factory.GetPaymentData());
         modelBuilder.Entity<Plan>().HasData(this._factory.GetPlanData());
         modelBuilder.Entity<PlanAddon>().HasData(this._factory.GetPlanAddonData());

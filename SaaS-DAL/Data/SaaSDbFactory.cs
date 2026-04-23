@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SaaS_DAL.Data.InitDataFactory;
 
 namespace SaaS_DAL.Data;
@@ -11,33 +10,24 @@ namespace SaaS_DAL.Data;
 public class SaaSDbFactory
 {
     private readonly AbstractDataFactory _factory;
-    private readonly string _dbPath;
+    private readonly string? _connectionString;
 
-    public SaaSDbFactory(AbstractDataFactory factory, string? dbPath = null)
+    public SaaSDbFactory(AbstractDataFactory factory, string? connectionString = null)
     {
         this._factory = factory;
-        this._dbPath = dbPath ?? "DB/saas.db";
+        this._connectionString = connectionString;
     }
 
     public SaaSDbContext CreateDbContext()
     {
         var options = new DbContextOptionsBuilder<SaaSDbContext>()
-            .UseSqlite(CreateConnectionString())
+            .UseSqlServer(this._connectionString)
             .Options;
-        
-        var context = new SaaSDbContext(options, this._factory);
-        
-        context.Database.Migrate();
-        
-        return context;
-    }
 
-    private string CreateConnectionString()
-    {
-        return new SqliteConnectionStringBuilder
-        {
-            DataSource = _dbPath,
-            Mode = SqliteOpenMode.ReadWriteCreate,
-        }.ConnectionString;
+        var context = new SaaSDbContext(options, this._factory);
+
+        context.Database.Migrate();
+
+        return context;
     }
 }

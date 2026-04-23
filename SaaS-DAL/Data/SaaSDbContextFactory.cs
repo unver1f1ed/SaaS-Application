@@ -13,10 +13,10 @@ public class SaaSDbContextFactory : IDesignTimeDbContextFactory<SaaSDbContext>
     public SaaSDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<SaaSDbContext>();
-        optionsBuilder.UseSqlite("Data Source=DB/saas.db");
+        optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=saas;Trusted_Connection=True;");
 
         var factory = new ReleaseDataFactory();
-        
+
         return new SaaSDbContext(optionsBuilder.Options, factory);
     }
 }

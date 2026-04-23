@@ -5,6 +5,14 @@
         <RootNamespace>SaaS_Domain</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <NoWarn>SA1600,SA1200,SA1618,SA1206,SA1313,SA1309,SA1633,SA1413,SA1401,SA1118,SA1117,SA0001</NoWarn>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
 
 </Project>

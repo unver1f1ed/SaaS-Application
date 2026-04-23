@@ -1,0 +1,168 @@
+﻿<UserControl x:Class="SaaS_PR.Views.Admin.AdminDashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:admin="clr-namespace:SaaS_PR.ViewModels.Admin"
+             
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             
+             d:DataContext="{d:DesignInstance Type=admin:AdminDashboardViewModel}"
+             Background="{StaticResource AppBackground}">
+
+    <materialDesign:DialogHost>
+        <Grid Margin="32">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Page header -->
+            <Grid Grid.Row="0" Margin="0 0 0 32">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Дашборд"
+                               Style="{StaticResource PageTitle}"
+                               Margin="0" />
+                    <TextBlock Text="Огляд системи та ключові метрики"
+                               Foreground="{StaticResource TextSecondary}"
+                               FontSize="13" />
+                </StackPanel>
+                <Button Grid.Column="1"
+                        Style="{StaticResource SecondaryButton}"
+                        Command="{Binding LoadCommand}"
+                        VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Refresh"
+                                                 Width="16" Height="16"
+                                                 VerticalAlignment="Center" />
+                        <TextBlock Text="Оновити"
+                                   Margin="8 0 0 0"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+            <!-- Stat cards -->
+            <UniformGrid Grid.Row="1" Columns="4" Margin="0 0 0 32">
+
+                <!-- Total Users -->
+                <materialDesign:Card Style="{StaticResource Card}" Margin="0 0 16 0">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0 0 0 16" HorizontalAlignment="Center">
+                            <Border Background="#1A4DD0E1"
+                                    CornerRadius="8"
+                                    Padding="10">
+                                <materialDesign:PackIcon Kind="AccountMultipleOutline"
+                                                         Width="20" Height="20"
+                                                         Foreground="{StaticResource AccentColor}" />
+                            </Border>
+                        </StackPanel>
+                        <TextBlock Text="{Binding TotalUsers}"
+                                   FontSize="32"
+                                   FontWeight="Light"
+                                   Foreground="{StaticResource TextPrimary}" 
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Всього користувачів"
+                                   FontSize="12"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   Margin="0 4 0 0" 
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </materialDesign:Card>
+
+                <!-- Total Plans -->
+                <materialDesign:Card Style="{StaticResource Card}" Margin="0 0 16 0">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0 0 0 16" HorizontalAlignment="Center">
+                            <Border Background="#1A66BB6A"
+                                    CornerRadius="8"
+                                    Padding="10">
+                                <materialDesign:PackIcon Kind="PackageVariantClosed"
+                                                         Width="20" Height="20"
+                                                         Foreground="{StaticResource SuccessColor}" />
+                            </Border>
+                        </StackPanel>
+                        <TextBlock Text="{Binding TotalPlans}"
+                                   FontSize="32"
+                                   FontWeight="Light"
+                                   Foreground="{StaticResource TextPrimary}" 
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Всього планів"
+                                   FontSize="12"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   Margin="0 4 0 0" 
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </materialDesign:Card>
+
+                <!-- Active Subscriptions -->
+                <materialDesign:Card Style="{StaticResource Card}" Margin="0 0 16 0">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0 0 0 16" HorizontalAlignment="Center">
+                            <Border Background="#1AFFA726"
+                                    CornerRadius="8"
+                                    Padding="10">
+                                <materialDesign:PackIcon Kind="ClipboardListOutline"
+                                                         Width="20" Height="20"
+                                                         Foreground="#FFA726" />
+                            </Border>
+                        </StackPanel>
+                        <TextBlock Text="{Binding ActiveSubscriptions}"
+                                   FontSize="32"
+                                   FontWeight="Light"
+                                   Foreground="{StaticResource TextPrimary}" 
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Активні підписки"
+                                   FontSize="12"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   Margin="0 4 0 0" 
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </materialDesign:Card>
+
+                <!-- Total Revenue -->
+                <materialDesign:Card Style="{StaticResource Card}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0 0 0 16" HorizontalAlignment="Center">
+                            <Border Background="#1AEF5350"
+                                    CornerRadius="8"
+                                    Padding="10">
+                                <materialDesign:PackIcon Kind="CurrencyUsd"
+                                                         Width="20" Height="20"
+                                                         Foreground="{StaticResource ErrorColor}" />
+                            </Border>
+                        </StackPanel>
+                        <TextBlock Text="{Binding TotalRevenue, StringFormat={}{0:C}}"
+                                   FontSize="32"
+                                   FontWeight="Light"
+                                   Foreground="{StaticResource TextPrimary}" 
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Загальний дохід"
+                                   FontSize="12"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   Margin="0 4 0 0" 
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </materialDesign:Card>
+
+            </UniformGrid>
+
+            <!-- Loading indicator -->
+            <ProgressBar Grid.Row="2"
+                         Style="{StaticResource MaterialDesignCircularProgressBar}"
+                         Value="0"
+                         IsIndeterminate="True"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Top"
+                         Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"
+                         Width="32" Height="32" />
+
+        </Grid>
+    </materialDesign:DialogHost>
+</UserControl>

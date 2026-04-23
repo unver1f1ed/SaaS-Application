@@ -5,16 +5,38 @@
         <TargetFramework>net10.0-windows</TargetFramework>
         <RootNamespace>SaaS_PR</RootNamespace>
         <Nullable>enable</Nullable>
+        <NoWarn>SA1600,SA1200,SA1618,SA1206,SA1313,SA1309,SA1633,SA1413,SA1401,SA1118,SA1117,SA1000,SA1201,SA1005,SA1515,SA1202,SA1009,SA1111,SA0001</NoWarn>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\SaaS-BLL\SaaS-BLL.csproj" />
+      <ProjectReference Include="..\SaaS_Infrastructure\SaaS_Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="MaterialDesignThemes" Version="5.3.1" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="10.0.3" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.3" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
+      <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Views\Shared\ProfileView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="bin\Debug\net10.0-windows\appsettings.json" />
     </ItemGroup>
 
 </Project>

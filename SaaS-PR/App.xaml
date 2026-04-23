@@ -1,9 +1,115 @@
 ﻿<Application x:Class="SaaS_PR.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SaaS_PR"
-             StartupUri="MainWindow.xaml">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SaaS_PR.Converters">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <!-- MaterialDesign base theme -->
+                <materialDesign:BundledTheme BaseTheme="Dark"
+                                             PrimaryColor="BlueGrey"
+                                             SecondaryColor="Cyan" />
+
+                <!-- MaterialDesign resource dictionaries -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Converters -->
+            <converters:NullToVisibilityConverter     x:Key="NullToVisibilityConverter" />
+            <converters:NotNullToVisibilityConverter  x:Key="NotNullToVisibilityConverter" />
+            <converters:InverseBooleanConverter       x:Key="InverseBooleanConverter" />
+            <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+            <!-- App-wide color overrides -->
+            <SolidColorBrush x:Key="AppBackground"    Color="#121212" />
+            <SolidColorBrush x:Key="SidebarBackground" Color="#1E1E1E" />
+            <SolidColorBrush x:Key="SurfaceColor"     Color="#1E1E1E" />
+            <SolidColorBrush x:Key="CardBackground"   Color="#252525" />
+            <SolidColorBrush x:Key="AccentColor"      Color="#4DD0E1" />
+            <SolidColorBrush x:Key="TextPrimary"      Color="#F5F5F5" />
+            <SolidColorBrush x:Key="TextSecondary"    Color="#9E9E9E" />
+            <SolidColorBrush x:Key="ErrorColor"       Color="#EF5350" />
+            <SolidColorBrush x:Key="SuccessColor"     Color="#66BB6A" />
+            <SolidColorBrush x:Key="DividerColor"     Color="#2E2E2E" />
+
+            <!-- Typography -->
+            <Style x:Key="PageTitle" TargetType="TextBlock">
+                <Setter Property="FontSize"   Value="24" />
+                <Setter Property="FontWeight" Value="Light" />
+                <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+                <Setter Property="Margin"     Value="0 0 0 24" />
+            </Style>
+
+            <Style x:Key="SectionLabel" TargetType="TextBlock">
+                <Setter Property="FontSize"   Value="11" />
+                <Setter Property="FontWeight" Value="Medium" />
+                <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+                <Setter Property="Margin"     Value="0 0 0 8" />
+                <!-- <Setter Property="CharacterSpacing" Value="150" /> -->
+            </Style>
+
+            <Style x:Key="ErrorText" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource ErrorColor}" />
+                <Setter Property="FontSize"   Value="12" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <Setter Property="Margin"     Value="0 4 0 0" />
+            </Style>
+
+            <Style x:Key="SuccessText" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource SuccessColor}" />
+                <Setter Property="FontSize"   Value="12" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <Setter Property="Margin"     Value="0 4 0 0" />
+            </Style>
+
+            <!-- Sidebar nav button style -->
+            <Style x:Key="NavButton" TargetType="Button"
+                   BasedOn="{StaticResource MaterialDesignFlatButton}">
+                <Setter Property="Foreground"           Value="{StaticResource TextSecondary}" />
+                <Setter Property="HorizontalAlignment"  Value="Stretch" />
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="Height"               Value="44" />
+                <Setter Property="Padding"              Value="16 0" />
+                <Setter Property="FontSize"             Value="13" />
+                <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="6" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- Primary action button -->
+            <Style x:Key="PrimaryButton" TargetType="Button"
+                   BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="Background"  Value="{StaticResource AccentColor}" />
+                <Setter Property="Foreground"  Value="#121212" />
+                <Setter Property="FontWeight"  Value="Medium" />
+                <Setter Property="Height"      Value="40" />
+                <Setter Property="Padding"     Value="24 0" />
+                <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="6" />
+            </Style>
+
+            <!-- Secondary/outline button -->
+            <Style x:Key="SecondaryButton" TargetType="Button"
+                   BasedOn="{StaticResource MaterialDesignOutlinedButton}">
+                <Setter Property="Height"  Value="40" />
+                <Setter Property="Padding" Value="24 0" />
+                <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="6" />
+            </Style>
+
+            <!-- Card panel -->
+            <Style x:Key="Card" TargetType="materialDesign:Card">
+                <Setter Property="Background"   Value="{StaticResource CardBackground}" />
+                <Setter Property="Padding"      Value="24" />
+                <Setter Property="UniformCornerRadius" Value="8" />
+                <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp2" />
+            </Style>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

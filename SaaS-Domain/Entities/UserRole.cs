@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SaaS_Domain.Entities;
+﻿namespace SaaS_Domain.Entities;
 
 public class UserRole : BaseEntity
 {
@@ -15,8 +13,9 @@ public class UserRole : BaseEntity
         this.Description = description;
     }
 
-    public string RoleName { get; set; } = null!;
-    public string? Description { get; set; }
-    
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+    public string RoleName { get; init; } = null!;
+
+    public string? Description { get; init; }
+
+    public virtual ICollection<User> Users { get; init; } = new List<User>();
 }

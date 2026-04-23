@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using SaaS_Domain.Enums;
+﻿using SaaS_Domain.Enums;
 
 namespace SaaS_Domain.Entities;
 
@@ -10,7 +9,7 @@ public class Payment : BaseEntity
     {
     }
 
-    public Payment(int id, int subscriptionId, decimal amount, Currency currency, 
+    public Payment(int id, int subscriptionId, decimal amount, Currency currency,
         DateTime paymentDate, PaymentMethod paymentMethod, PaymentStatus status)
         : base(id)
     {
@@ -21,14 +20,18 @@ public class Payment : BaseEntity
         this.PaymentMethod = paymentMethod;
         this.Status = status;
     }
-    
-    public int SubscriptionId { get; set; }
-    public decimal Amount { get; set; }
-    public Currency Currency { get; set; }
-    public DateTime PaymentDate { get; set; }
-    public PaymentMethod PaymentMethod { get; set; }
+
+    public int SubscriptionId { get; init; }
+
+    public decimal Amount { get; init; }
+
+    public Currency Currency { get; init; }
+
+    public DateTime PaymentDate { get; init; }
+
+    public PaymentMethod PaymentMethod { get; init; }
+
     public PaymentStatus Status { get; set; }
 
-    public Subscription Subscription { get; set; } = null!;
-
+    public Subscription Subscription { get; init; } = null!;
 }
