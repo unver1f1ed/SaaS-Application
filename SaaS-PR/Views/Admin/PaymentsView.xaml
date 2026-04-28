@@ -100,7 +100,7 @@
                         <DataGridTextColumn Header="ДАТА"
                                             Binding="{Binding PaymentDate, StringFormat=dd/MM/yyyy HH:mm}"
                                             Width="*" />
-                        <DataGridTextColumn Header="КІЛЬКІСТЬ"
+                        <DataGridTextColumn Header="СУМА"
                                             Binding="{Binding Amount, StringFormat={}{0:C}}"
                                             Width="Auto" />
                         <DataGridTextColumn Header="ВАЛЮТА" Binding="{Binding Currency}" Width="Auto" />

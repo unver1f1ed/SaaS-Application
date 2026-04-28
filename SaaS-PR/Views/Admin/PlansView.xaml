@@ -127,7 +127,7 @@
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel>
 
-                        <TextBlock Text="Детіла плану"
+                        <TextBlock Text="Деталі плану"
                                    FontSize="16"
                                    FontWeight="Medium"
                                    Foreground="{StaticResource TextPrimary}"
