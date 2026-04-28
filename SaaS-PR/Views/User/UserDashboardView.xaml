@@ -82,7 +82,7 @@
                         <Style TargetType="TextBlock">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding HasActiveSubscription}" Value="True">
-                                    <Setter Property="Text" Value="У вас немає активних підписок" />
+                                    <Setter Property="Text" Value="У вас є активні підписки" />
                                     <Setter Property="Foreground" Value="{StaticResource SuccessColor}" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding HasActiveSubscription}" Value="False">
