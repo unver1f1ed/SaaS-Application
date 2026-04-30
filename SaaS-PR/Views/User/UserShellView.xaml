@@ -20,7 +20,6 @@
         <Grid Grid.Column="0" Background="{StaticResource SidebarBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="64" />
-                <!-- Navigation history buttons -->
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
@@ -45,9 +44,9 @@
                                Margin="10 0 0 0" />
                 </StackPanel>
             </Border>
-
+            
             <!-- Navigation history buttons -->
-            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="8 8">
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="8 8" HorizontalAlignment="Center">
                 <Button Style="{StaticResource MaterialDesignIconButton}"
                         Command="{Binding GoBackCommand}"
                         ToolTip="Назад"
@@ -64,7 +63,7 @@
                     <materialDesign:PackIcon Kind="ArrowRight" Width="18" Height="18" />
                 </Button>
             </StackPanel>
-
+            
             <!-- Navigation items -->
             <StackPanel Grid.Row="2" Margin="8 16 8 0">
 

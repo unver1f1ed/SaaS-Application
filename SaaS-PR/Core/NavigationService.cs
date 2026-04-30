@@ -31,13 +31,13 @@ public class NavigationService : ViewModelBase
         where TViewModel : ViewModelBase
     {
         var viewModel = this._viewModelFactory(typeof(TViewModel));
-        
+
         // If we navigated back and then navigate to a new view, truncate forward history
         if (this._historyIndex < this._history.Count - 1)
         {
             this._history.RemoveRange(this._historyIndex + 1, this._history.Count - this._historyIndex - 1);
         }
-        
+
         // Add to history (avoid duplicates at consecutive positions)
         if (this._history.Count == 0 || this._history[^1].GetType() != typeof(TViewModel))
         {
@@ -51,29 +51,33 @@ public class NavigationService : ViewModelBase
         }
 
         this.CurrentView = viewModel;
-        this.OnPropertyChanged(nameof(CanGoBack));
-        this.OnPropertyChanged(nameof(CanGoForward));
+        this.OnPropertyChanged(nameof(this.CanGoBack));
+        this.OnPropertyChanged(nameof(this.CanGoForward));
     }
 
     public void GoBack()
     {
-        if (this.CanGoBack)
+        if (!this.CanGoBack)
         {
-            this._historyIndex--;
-            this.CurrentView = this._history[this._historyIndex];
-            this.OnPropertyChanged(nameof(CanGoBack));
-            this.OnPropertyChanged(nameof(CanGoForward));
+            return;
         }
+
+        this._historyIndex--;
+        this.CurrentView = this._history[this._historyIndex];
+        this.OnPropertyChanged(nameof(this.CanGoBack));
+        this.OnPropertyChanged(nameof(this.CanGoForward));
     }
 
     public void GoForward()
     {
-        if (this.CanGoForward)
+        if (!this.CanGoForward)
         {
-            this._historyIndex++;
-            this.CurrentView = this._history[this._historyIndex];
-            this.OnPropertyChanged(nameof(CanGoBack));
-            this.OnPropertyChanged(nameof(CanGoForward));
+            return;
         }
+
+        this._historyIndex++;
+        this.CurrentView = this._history[this._historyIndex];
+        this.OnPropertyChanged(nameof(this.CanGoBack));
+        this.OnPropertyChanged(nameof(this.CanGoForward));
     }
 }

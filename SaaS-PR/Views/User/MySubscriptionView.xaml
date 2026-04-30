@@ -152,7 +152,7 @@
                             <DataGridTextColumn Header="ЦІНА"
                                                 Binding="{Binding UnitPrice, StringFormat={}{0:C}}"
                                                 Width="Auto" />
-                            <DataGridTextColumn Header="ОПЛАТА"
+                            <DataGridTextColumn Header="ТИП ОПЛАТИ"
                                                 Binding="{Binding BillingType}"
                                                 Width="Auto" />
                             <DataGridTemplateColumn Header="" Width="60">
