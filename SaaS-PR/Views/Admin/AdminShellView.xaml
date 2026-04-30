@@ -24,6 +24,8 @@
             <Grid.RowDefinitions>
                 <!-- Logo area -->
                 <RowDefinition Height="64" />
+                <!-- Navigation history buttons -->
+                <RowDefinition Height="Auto" />
                 <!-- Nav items -->
                 <RowDefinition Height="*" />
                 <!-- User footer -->
@@ -50,8 +52,27 @@
                 </StackPanel>
             </Border>
 
+            <!-- Navigation history buttons -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="8 8">
+                <Button Style="{StaticResource MaterialDesignIconButton}"
+                        Command="{Binding GoBackCommand}"
+                        ToolTip="Назад"
+                        IsEnabled="{Binding ShellNav.CanGoBack}"
+                        Foreground="{StaticResource TextSecondary}">
+                    <materialDesign:PackIcon Kind="ArrowLeft" Width="18" Height="18" />
+                </Button>
+                <Button Style="{StaticResource MaterialDesignIconButton}"
+                        Command="{Binding GoForwardCommand}"
+                        ToolTip="Вперед"
+                        IsEnabled="{Binding ShellNav.CanGoForward}"
+                        Foreground="{StaticResource TextSecondary}"
+                        Margin="4 0 0 0">
+                    <materialDesign:PackIcon Kind="ArrowRight" Width="18" Height="18" />
+                </Button>
+            </StackPanel>
+
             <!-- Navigation items -->
-            <StackPanel Grid.Row="1" Margin="8 16 8 0">
+            <StackPanel Grid.Row="2" Margin="8 16 8 0">
 
                 <TextBlock Text="ОГЛЯД"
                            Style="{StaticResource SectionLabel}"
@@ -164,7 +185,7 @@
             </StackPanel>
 
             <!-- User footer + logout -->
-            <Border Grid.Row="2"
+            <Border Grid.Row="4"
                     BorderBrush="{StaticResource DividerColor}"
                     BorderThickness="0 1 0 0"
                     Padding="16 12">

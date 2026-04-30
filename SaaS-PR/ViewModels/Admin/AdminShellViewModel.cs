@@ -34,6 +34,10 @@ public class AdminShellViewModel : ViewModelBase
 
     public RelayCommand LogoutCommand { get; }
 
+    public RelayCommand GoBackCommand { get; }
+
+    public RelayCommand GoForwardCommand { get; }
+
     public AdminShellViewModel(
         ShellNavigationService shellNav,
         RootNavigationService rootNav,
@@ -52,6 +56,8 @@ public class AdminShellViewModel : ViewModelBase
         this.GoToPaymentsCommand = new RelayCommand(() => this._shellNav.NavigateTo<PaymentsViewModel>());
         this.GoToProfileCommand = new RelayCommand(() => this._shellNav.NavigateTo<AdminProfileViewModel>());
         this.LogoutCommand = new RelayCommand(this.ExecuteLogout);
+        this.GoBackCommand = new RelayCommand(() => this._shellNav.GoBack(), () => this._shellNav.CanGoBack);
+        this.GoForwardCommand = new RelayCommand(() => this._shellNav.GoForward(), () => this._shellNav.CanGoForward);
 
         this._shellNav.NavigateTo<AdminDashboardViewModel>();
     }

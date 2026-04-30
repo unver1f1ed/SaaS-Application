@@ -51,15 +51,44 @@
             </StackPanel>
         </Grid>
 
-        <!-- Plan picker -->
-        <ComboBox Grid.Row="1"
-                  materialDesign:HintAssist.Hint="Оберіть план щоби керувати його додатками"
-                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                  ItemsSource="{Binding Plans}"
-                  SelectedItem="{Binding SelectedPlan}"
-                  DisplayMemberPath="Name"
-                  Foreground="{StaticResource TextPrimary}"
-                  Margin="0 0 0 16" />
+        <!-- Plan picker and filters -->
+        <Grid Grid.Row="1" Margin="0 0 0 16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            
+            <ComboBox Grid.Column="0"
+                      materialDesign:HintAssist.Hint="Оберіть план щоби керувати його додатками"
+                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      ItemsSource="{Binding Plans}"
+                      SelectedItem="{Binding SelectedPlan}"
+                      DisplayMemberPath="Name"
+                      Foreground="{StaticResource TextPrimary}" />
+
+            <TextBox Grid.Column="2"
+                     materialDesign:HintAssist.Hint="Пошук..."
+                     materialDesign:TextFieldAssist.LeadingIcon="Magnify"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                     Foreground="{StaticResource TextPrimary}" />
+
+            <ComboBox Grid.Column="4"
+                      materialDesign:HintAssist.Hint="Тип оплати"
+                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      ItemsSource="{Binding BillingTypes}"
+                      SelectedItem="{Binding SelectedBillingTypeFilter}"
+                      Foreground="{StaticResource TextPrimary}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
 
         <!-- Addons list + form -->
         <Grid Grid.Row="2">
@@ -94,7 +123,7 @@
                         <DataGridTextColumn Header="ЦІНА"
                                             Binding="{Binding UnitPrice, StringFormat={}{0:C}}"
                                             Width="Auto" />
-                        <DataGridTextColumn Header="ТИП СПЛАЧУВАННЯ"
+                        <DataGridTextColumn Header="ТИП ОПЛАТИ"
                                             Binding="{Binding BillingType}"
                                             Width="Auto" />
                         <DataGridTextColumn Header="ВАЛЮТА"

@@ -17,12 +17,14 @@ public class SubscriptionAddonsViewModel : ViewModelBase
     private ObservableCollection<SubscriptionDto> _subscriptions = new();
     private ObservableCollection<SubscriptionAddonDto> _currentAddons = new();
     private ObservableCollection<PlanAddonDto> _availableAddons = new();
+    private List<SubscriptionAddonDto> _allCurrentAddons = new();
     private UserDto? _selectedUser;
     private SubscriptionDto? _selectedSubscription;
     private PlanAddonDto? _selectedAvailableAddon;
     private int _formQuantity = 1;
     private bool _isBusy;
     private string? _errorMessage;
+    private string _searchText = string.Empty;
 
     public ObservableCollection<UserDto> Users { get => this._users; set => this.SetProperty(ref this._users, value); }
 
@@ -70,6 +72,16 @@ public class SubscriptionAddonsViewModel : ViewModelBase
     public bool IsBusy { get => this._isBusy; set => this.SetProperty(ref this._isBusy, value); }
 
     public string? ErrorMessage { get => this._errorMessage; set => this.SetProperty(ref this._errorMessage, value); }
+
+    public string SearchText
+    {
+        get => this._searchText;
+        set
+        {
+            this.SetProperty(ref this._searchText, value);
+            this.FilterAddons();
+        }
+    }
 
     public AsyncRelayCommand LoadUsersCommand { get; }
 
@@ -130,7 +142,8 @@ public class SubscriptionAddonsViewModel : ViewModelBase
         var currentResult = await this._subscriptionAddonService.GetBySubscriptionIdAsync(subscription.Id);
         if (currentResult.Success)
         {
-            this.CurrentAddons = new ObservableCollection<SubscriptionAddonDto>(currentResult.Data!);
+            this._allCurrentAddons = currentResult.Data!.ToList();
+            this.CurrentAddons = new ObservableCollection<SubscriptionAddonDto>(this._allCurrentAddons);
         }
 
         var availableResult = await this._planAddonService.GetByPlanIdAsync(subscription.PlanId);
@@ -142,6 +155,20 @@ public class SubscriptionAddonsViewModel : ViewModelBase
         }
 
         this.IsBusy = false;
+    }
+
+    private void FilterAddons()
+    {
+        var filtered = this._allCurrentAddons.AsEnumerable();
+
+        // Apply text search on addon name
+        if (!string.IsNullOrWhiteSpace(this.SearchText))
+        {
+            filtered = filtered.Where(a =>
+                a.AddonName.Contains(this.SearchText, StringComparison.OrdinalIgnoreCase));
+        }
+
+        this.CurrentAddons = new ObservableCollection<SubscriptionAddonDto>(filtered);
     }
 
     private async Task AddAddonAsync(object? _)

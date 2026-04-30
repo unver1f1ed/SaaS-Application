@@ -14,11 +14,14 @@ public class PlanAddonsViewModel : ViewModelBase
 
     private ObservableCollection<PlanDto> _plans = new();
     private ObservableCollection<PlanAddonDto> _addons = new();
+    private List<PlanAddonDto> _allAddons = new();
     private PlanDto? _selectedPlan;
     private PlanAddonDto? _selectedAddon;
     private bool _isBusy;
     private bool _isEditing;
     private string? _errorMessage;
+    private string _searchText = string.Empty;
+    private BillingType? _selectedBillingTypeFilter;
 
     // Form fields
     private string _formAddonName = string.Empty;
@@ -62,6 +65,28 @@ public class PlanAddonsViewModel : ViewModelBase
     public bool IsEditing { get => this._isEditing; set => this.SetProperty(ref this._isEditing, value); }
 
     public string? ErrorMessage { get => this._errorMessage; set => this.SetProperty(ref this._errorMessage, value); }
+
+    public string SearchText
+    {
+        get => this._searchText;
+        set
+        {
+            this.SetProperty(ref this._searchText, value);
+            this.FilterAddons();
+        }
+    }
+
+    public BillingType? SelectedBillingTypeFilter
+    {
+        get => this._selectedBillingTypeFilter;
+        set
+        {
+            this.SetProperty(ref this._selectedBillingTypeFilter, value);
+            this.FilterAddons();
+        }
+    }
+
+    public IEnumerable<BillingType> BillingTypes => Enum.GetValues<BillingType>();
 
     public string FormAddonName { get => this._formAddonName; set => this.SetProperty(ref this._formAddonName, value); }
 
@@ -117,10 +142,32 @@ public class PlanAddonsViewModel : ViewModelBase
         var result = await this._planAddonService.GetByPlanIdAsync(planId);
         if (result.Success)
         {
-            this.Addons = new ObservableCollection<PlanAddonDto>(result.Data!);
+            this._allAddons = result.Data!.ToList();
+            this.Addons = new ObservableCollection<PlanAddonDto>(this._allAddons);
         }
 
         this.IsBusy = false;
+    }
+
+    private void FilterAddons()
+    {
+        var filtered = this._allAddons.AsEnumerable();
+
+        // Apply text search
+        if (!string.IsNullOrWhiteSpace(this.SearchText))
+        {
+            filtered = filtered.Where(a =>
+                a.AddonName.Contains(this.SearchText, StringComparison.OrdinalIgnoreCase) ||
+                (a.Description?.Contains(this.SearchText, StringComparison.OrdinalIgnoreCase) ?? false));
+        }
+
+        // Apply billing type filter
+        if (this.SelectedBillingTypeFilter.HasValue)
+        {
+            filtered = filtered.Where(a => a.BillingType == this.SelectedBillingTypeFilter.Value);
+        }
+
+        this.Addons = new ObservableCollection<PlanAddonDto>(filtered);
     }
 
     private async Task SaveAsync(object? _)
