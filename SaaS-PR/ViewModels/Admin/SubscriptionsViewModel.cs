@@ -2,6 +2,7 @@
 using SaaS_BLL.Interfaces;
 using SaaS_BLL.Models;
 using SaaS_BLL.Models.Requests;
+using SaaS_Domain.Enums;
 using SaaS_PR.Core;
 
 namespace SaaS_PR.ViewModels.Admin;
@@ -15,6 +16,7 @@ public class SubscriptionsViewModel : ViewModelBase
     private ObservableCollection<UserDto> _users = new();
     private ObservableCollection<SubscriptionDto> _subscriptions = new();
     private ObservableCollection<PlanDto> _plans = new();
+    private List<SubscriptionDto> _allSubscriptions = new();
     private UserDto? _selectedUser;
     private SubscriptionDto? _selectedSubscription;
     private PlanDto? _selectedPlan;
@@ -23,6 +25,8 @@ public class SubscriptionsViewModel : ViewModelBase
     private string? _errorMessage;
     private string? _successMessage;
     private string _cancellationReason = string.Empty;
+    private string _searchText = string.Empty;
+    private SubscriptionState? _selectedStatusFilter;
 
     public ObservableCollection<UserDto> Users { get => this._users; set => this.SetProperty(ref this._users, value); }
 
@@ -60,6 +64,28 @@ public class SubscriptionsViewModel : ViewModelBase
     public string? SuccessMessage { get => this._successMessage; set => this.SetProperty(ref this._successMessage, value); }
 
     public string CancellationReason { get => this._cancellationReason; set => this.SetProperty(ref this._cancellationReason, value); }
+
+    public string SearchText
+    {
+        get => this._searchText;
+        set
+        {
+            this.SetProperty(ref this._searchText, value);
+            this.FilterSubscriptions();
+        }
+    }
+
+    public SubscriptionState? SelectedStatusFilter
+    {
+        get => this._selectedStatusFilter;
+        set
+        {
+            this.SetProperty(ref this._selectedStatusFilter, value);
+            this.FilterSubscriptions();
+        }
+    }
+
+    public IEnumerable<SubscriptionState> SubscriptionStates => Enum.GetValues<SubscriptionState>();
 
     public AsyncRelayCommand LoadUsersCommand { get; }
 
@@ -109,10 +135,32 @@ public class SubscriptionsViewModel : ViewModelBase
         var result = await this._subscriptionService.GetByUserIdAsync(userId);
         if (result.Success)
         {
-            this.Subscriptions = new ObservableCollection<SubscriptionDto>(result.Data!);
+            this._allSubscriptions = result.Data!.ToList();
+            this.Subscriptions = new ObservableCollection<SubscriptionDto>(this._allSubscriptions);
         }
 
         this.IsBusy = false;
+    }
+
+    private void FilterSubscriptions()
+    {
+        var filtered = this._allSubscriptions.AsEnumerable();
+
+        // Apply text search
+        if (!string.IsNullOrWhiteSpace(this.SearchText))
+        {
+            filtered = filtered.Where(s =>
+                s.PlanName.Contains(this.SearchText, StringComparison.OrdinalIgnoreCase) ||
+                s.State.Contains(this.SearchText, StringComparison.OrdinalIgnoreCase));
+        }
+
+        // Apply status filter
+        if (this.SelectedStatusFilter.HasValue)
+        {
+            filtered = filtered.Where(s => s.State == this.SelectedStatusFilter.Value.ToString());
+        }
+
+        this.Subscriptions = new ObservableCollection<SubscriptionDto>(filtered);
     }
 
     private async Task CreateSubscriptionAsync(object? _)

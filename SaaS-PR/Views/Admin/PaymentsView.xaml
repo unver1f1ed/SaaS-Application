@@ -41,34 +41,64 @@
             </Button>
         </Grid>
 
-        <!-- User + Subscription pickers -->
-        <ComboBox Grid.Row="1"
-                  materialDesign:HintAssist.Hint="Оберіть користувача"
-                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                  ItemsSource="{Binding Users}"
-                  SelectedItem="{Binding SelectedUser}"
-                  Foreground="{StaticResource TextPrimary}"
-                  Margin="0 0 0 12">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                        <Run Text="{Binding FirstName}" />
-                        <Run Text="{Binding LastName}" />
-                        <Run Text=" — " />
-                        <Run Text="{Binding Email}" Foreground="{StaticResource TextSecondary}" />
-                    </TextBlock>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+        <!-- User + Subscription pickers and filters -->
+        <Grid Grid.Row="1" Margin="0 0 0 12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            
+            <ComboBox Grid.Column="0"
+                      materialDesign:HintAssist.Hint="Оберіть користувача"
+                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      ItemsSource="{Binding Users}"
+                      SelectedItem="{Binding SelectedUser}"
+                      Foreground="{StaticResource TextPrimary}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <Run Text="{Binding FirstName}" />
+                            <Run Text="{Binding LastName}" />
+                            <Run Text=" — " />
+                            <Run Text="{Binding Email}" Foreground="{StaticResource TextSecondary}" />
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
 
-        <ComboBox Grid.Row="2"
-                  materialDesign:HintAssist.Hint="Оберіть підписку"
-                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                  ItemsSource="{Binding Subscriptions}"
-                  SelectedItem="{Binding SelectedSubscription}"
-                  DisplayMemberPath="PlanName"
-                  Foreground="{StaticResource TextPrimary}"
-                  Margin="0 0 0 16" />
+            <ComboBox Grid.Column="2"
+                      materialDesign:HintAssist.Hint="Оберіть підписку"
+                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      ItemsSource="{Binding Subscriptions}"
+                      SelectedItem="{Binding SelectedSubscription}"
+                      DisplayMemberPath="PlanName"
+                      Foreground="{StaticResource TextPrimary}" />
+            
+            <TextBox Grid.Column="4"
+                     materialDesign:HintAssist.Hint="Пошук..."
+                     materialDesign:TextFieldAssist.LeadingIcon="Magnify"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                     Foreground="{StaticResource TextPrimary}" />
+
+            <ComboBox Grid.Column="6"
+                      materialDesign:HintAssist.Hint="Статус"
+                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      ItemsSource="{Binding PaymentStatuses}"
+                      SelectedItem="{Binding SelectedStatusFilter}"
+                      Foreground="{StaticResource TextPrimary}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
 
         <!-- Payments list + record form -->
         <Grid Grid.Row="3">

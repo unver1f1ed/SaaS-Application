@@ -16,11 +16,14 @@ public class PaymentsViewModel : ViewModelBase
     private ObservableCollection<UserDto> _users = new();
     private ObservableCollection<SubscriptionDto> _subscriptions = new();
     private ObservableCollection<PaymentDto> _payments = new();
+    private List<PaymentDto> _allPayments = new();
     private UserDto? _selectedUser;
     private SubscriptionDto? _selectedSubscription;
     private PaymentDto? _selectedPayment;
     private bool _isBusy;
     private string? _errorMessage;
+    private string _searchText = string.Empty;
+    private PaymentStatus? _selectedStatusFilter;
 
     // Record payment form
     private decimal _formAmount;
@@ -65,17 +68,37 @@ public class PaymentsViewModel : ViewModelBase
 
     public string? ErrorMessage { get => this._errorMessage; set => this.SetProperty(ref this._errorMessage, value); }
 
-    public decimal FormAmount { get => this._formAmount; set => this.SetProperty(ref this._formAmount, value); }
+    public string SearchText
+    {
+        get => this._searchText;
+        set
+        {
+            this.SetProperty(ref this._searchText, value);
+            this.FilterPayments();
+        }
+    }
 
-    public Currency FormCurrency { get => this._formCurrency; set => this.SetProperty(ref this._formCurrency, value); }
-
-    public PaymentMethod FormPaymentMethod { get => this._formPaymentMethod; set => this.SetProperty(ref this._formPaymentMethod, value); }
+    public PaymentStatus? SelectedStatusFilter
+    {
+        get => this._selectedStatusFilter;
+        set
+        {
+            this.SetProperty(ref this._selectedStatusFilter, value);
+            this.FilterPayments();
+        }
+    }
 
     public IEnumerable<PaymentStatus> PaymentStatuses => Enum.GetValues<PaymentStatus>();
 
     public IEnumerable<Currency> Currencies => Enum.GetValues<Currency>();
 
     public IEnumerable<PaymentMethod> PaymentMethods => Enum.GetValues<PaymentMethod>();
+
+    public decimal FormAmount { get => this._formAmount; set => this.SetProperty(ref this._formAmount, value); }
+
+    public Currency FormCurrency { get => this._formCurrency; set => this.SetProperty(ref this._formCurrency, value); }
+
+    public PaymentMethod FormPaymentMethod { get => this._formPaymentMethod; set => this.SetProperty(ref this._formPaymentMethod, value); }
 
     public AsyncRelayCommand LoadUsersCommand { get; }
 
@@ -124,10 +147,33 @@ public class PaymentsViewModel : ViewModelBase
         var result = await this._paymentService.GetBySubscriptionIdAsync(subscriptionId);
         if (result.Success)
         {
-            this.Payments = new ObservableCollection<PaymentDto>(result.Data!);
+            this._allPayments = result.Data!.ToList();
+            this.Payments = new ObservableCollection<PaymentDto>(this._allPayments);
         }
 
         this.IsBusy = false;
+    }
+
+    private void FilterPayments()
+    {
+        var filtered = this._allPayments.AsEnumerable();
+
+        // Apply text search
+        if (!string.IsNullOrWhiteSpace(this.SearchText))
+        {
+            filtered = filtered.Where(p =>
+                p.Amount.ToString().Contains(this.SearchText, StringComparison.OrdinalIgnoreCase) ||
+                p.Currency.ToString().Contains(this.SearchText, StringComparison.OrdinalIgnoreCase) ||
+                p.PaymentMethod.ToString().Contains(this.SearchText, StringComparison.OrdinalIgnoreCase));
+        }
+
+        // Apply status filter
+        if (this.SelectedStatusFilter.HasValue)
+        {
+            filtered = filtered.Where(p => p.Status == this.SelectedStatusFilter.Value);
+        }
+
+        this.Payments = new ObservableCollection<PaymentDto>(filtered);
     }
 
     private async Task UpdateStatusAsync(object? parameter)

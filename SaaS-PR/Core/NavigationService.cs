@@ -1,7 +1,7 @@
 ﻿namespace SaaS_PR.Core;
 
 /// <summary>
-/// Manages navigation between ViewModels.
+/// Manages navigation between ViewModels with history support.
 /// Uses a factory delegate to resolve ViewModels, keeping IServiceProvider
 /// out of application code and avoiding the service locator anti-pattern.
 /// </summary>
