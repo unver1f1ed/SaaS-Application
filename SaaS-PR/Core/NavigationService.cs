@@ -8,8 +8,8 @@
 public class NavigationService : ViewModelBase
 {
     private readonly Func<Type, ViewModelBase> _viewModelFactory;
-    private ViewModelBase? _currentView;
     private readonly List<ViewModelBase> _history = new();
+    private ViewModelBase? _currentView;
     private int _historyIndex = -1;
 
     public ViewModelBase? CurrentView
@@ -22,7 +22,7 @@ public class NavigationService : ViewModelBase
 
     public bool CanGoForward => this._historyIndex < this._history.Count - 1;
 
-    public NavigationService(Func<Type, ViewModelBase> viewModelFactory)
+    protected NavigationService(Func<Type, ViewModelBase> viewModelFactory)
     {
         this._viewModelFactory = viewModelFactory;
     }

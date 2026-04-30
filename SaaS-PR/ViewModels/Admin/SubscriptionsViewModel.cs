@@ -151,13 +151,13 @@ public class SubscriptionsViewModel : ViewModelBase
         {
             filtered = filtered.Where(s =>
                 s.PlanName.Contains(this.SearchText, StringComparison.OrdinalIgnoreCase) ||
-                s.State.Contains(this.SearchText, StringComparison.OrdinalIgnoreCase));
+                s.State.ToString().Contains(this.SearchText, StringComparison.OrdinalIgnoreCase));
         }
 
         // Apply status filter
         if (this.SelectedStatusFilter.HasValue)
         {
-            filtered = filtered.Where(s => s.State == this.SelectedStatusFilter.Value.ToString());
+            filtered = filtered.Where(s => s.State == this.SelectedStatusFilter.Value);
         }
 
         this.Subscriptions = new ObservableCollection<SubscriptionDto>(filtered);

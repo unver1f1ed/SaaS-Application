@@ -64,19 +64,27 @@ public class SubscriptionService : ISubscriptionService
             return ServiceResult<SubscriptionDto>.Fail("Plan not found.");
         }
 
-        // Check for existing active subscription on this plan
-        var alreadySubscribed = await this._uow.Subscriptions.Query()
-            .AnyAsync(
-                s => s.UserId == request.UserId
-                        && s.PlanId == request.PlanId
-                        && (s.State == SubscriptionState.Active || s.State == SubscriptionState.Trial), ct);
+        var now = DateTime.UtcNow;
 
-        if (alreadySubscribed)
+        // Get all active subscriptions for this user
+        var activeSubscriptions = await this._uow.Subscriptions.Query()
+            .Where(s => s.UserId == request.UserId
+                        && (s.State == SubscriptionState.Active || s.State == SubscriptionState.Trial))
+            .ToListAsync(ct);
+
+        // Automatically cancel all existing active subscriptions
+        if (activeSubscriptions.Any())
         {
-            return ServiceResult<SubscriptionDto>.Fail("User already has an active subscription to this plan.");
+            foreach (var oldSubscription in activeSubscriptions)
+            {
+                oldSubscription.State = SubscriptionState.Cancelled;
+                oldSubscription.CancellationDate = now;
+                oldSubscription.CancellationReason = "Automatically cancelled due to new subscription";
+                oldSubscription.AutoRenew = false;
+                this._uow.Subscriptions.Update(oldSubscription);
+            }
         }
 
-        var now = DateTime.UtcNow;
         var isTrial = plan.TrialDays > 0;
 
         var subscription = new Subscription(

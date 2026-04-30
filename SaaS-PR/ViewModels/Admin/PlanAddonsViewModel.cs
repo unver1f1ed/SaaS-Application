@@ -86,8 +86,6 @@ public class PlanAddonsViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<BillingType> BillingTypes => Enum.GetValues<BillingType>();
-
     public string FormAddonName { get => this._formAddonName; set => this.SetProperty(ref this._formAddonName, value); }
 
     public string? FormDescription { get => this._formDescription; set => this.SetProperty(ref this._formDescription, value); }

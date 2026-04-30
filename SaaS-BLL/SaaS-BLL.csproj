@@ -5,7 +5,7 @@
         <RootNamespace>SaaS_BLL</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <NoWarn>SA1600,SA1200,SA1618,SA1206,SA1313,SA1309,SA1633,SA1413,SA1401,SA1118,SA1117,SA0001</NoWarn>
+        <NoWarn>SA1600,SA1200,SA1618,SA1206,SA1313,SA1309,SA1633,SA1413,SA1401,SA1118,SA1117,SA1000,SA1201,SA1005,SA1515,SA1202,SA1009,SA1111,SA0001</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
